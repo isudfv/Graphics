@@ -13,12 +13,12 @@ void myinit() {
 }
 
 void displaySG() {
-    GLfloat vertices[3][3] = { {0.0,0.0,0.0}, {250.0, 500.0,0.0}, {500.0,0.0,0.0} };
+    GLfloat vertices[3][3] = { {0.0,0.0,0.0}, {500.0, 500.0,0.0}, {500.0,0.0,0.0} };
     // an arbitrary triangle in the plane z = 0;
     GLfloat p[3] = { 7.5, 5.0, 0.0 };
     // or set any desired initial point which is inside the triangle;
     int  j, k;
-    int total_points = 5000;
+    int total_points = 50000;
     glBegin(GL_POINTS);
     for (k = 0; k < total_points; k++) {
         /* pick a random vertex from 0, 1, 2*/

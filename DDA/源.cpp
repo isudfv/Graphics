@@ -9,6 +9,7 @@
 using namespace std;
 
 const int MAX = 1000;
+//#define ttt 900
 
 std::vector<std::tuple<int, int, int, int>> getRandomLines(int count) {
 	std::vector<std::tuple<int, int, int, int >> temp(count);
@@ -19,6 +20,16 @@ std::vector<std::tuple<int, int, int, int>> getRandomLines(int count) {
 	});
 	return temp;
 }
+
+//std::vector<std::tuple<int, int, int, int>> getRandomLines(int count) {
+//	std::vector<std::tuple<int, int, int, int >> temp(count);
+//	std::mt19937 gen(1);
+//	std::uniform_real_distribution<> dis(0, 1);
+//	std::generate(temp.begin(), temp.end(), [&]() {
+//		return std::make_tuple(0, 800, ttt, (800 - ttt * dis(gen)) );
+//	});
+//	return temp;
+//}
 
 void linesDDA(int x0, int y0, int x1, int y1) {
 	//ofstream out("DDA.txt");
@@ -32,12 +43,12 @@ void linesDDA(int x0, int y0, int x1, int y1) {
 	x_inc = (float)dx/step;
 	y_inc = (float)dy/step;
 	//cout << x_inc << " " << y_inc << endl << step << endl;
-	glPointSize(1);
+	glPointSize(9);
 	glColor3f(1.0, 0, 0);
 	glBegin(GL_POINTS);
 	for (int k = 0; k <= step; k++) {
-		glVertex2i(int(x + 0.5), int(y + 0.5));
-		//glVertex2i(round(x), round(y));
+		//glVertex2i(int(x + 0.5), int(y + 0.5));
+		glVertex2i(round(x), round(y));
 		x += x_inc;
 		y += y_inc;
 	}
@@ -127,6 +138,8 @@ void display(int lines) {
 	auto endTime = chrono::high_resolution_clock::now();
 	glFlush();
 	cout << format("DDA costs {}\n", chrono::duration_cast<chrono::milliseconds>(endTime - startTime));
+	ofstream out1("DDA.txt", ios::app);
+	out1 << chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count() << endl;
 
 	this_thread::sleep_for(1s);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -141,6 +154,8 @@ void display(int lines) {
 	}
 	endTime = chrono::high_resolution_clock::now();
 	cout << format("Bresenham costs {}\n", chrono::duration_cast<chrono::milliseconds>(endTime - startTime));
+	ofstream out("Bresenham.txt", ios::app);
+	out << chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count() << endl;
 	glFlush();
 
 
@@ -178,7 +193,7 @@ void display(int lines) {
 
 void displayLoop() {
 	//std::vector<int> loop{ 5000, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000 };
-	std::vector<int> loop{ 100000 };
+	std::vector<int> loop{ 10 };
 	for (auto p : loop) {
 		display(p);
 	}
@@ -187,7 +202,7 @@ void displayLoop() {
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	glutInitWindowPosition(500, 500);
+	glutInitWindowPosition(500, 300);
 	glutInitWindowSize(MAX, MAX);
 	glutCreateWindow("DDA_Bresenham");
 	glutDisplayFunc(displayLoop);

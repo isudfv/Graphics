@@ -13,9 +13,9 @@
 #include <ctime>
 using namespace std;
 
-const int MAX = 1000;
+const int MAX = 1500;
 const int BLOCKSIZE = 30;
-const int MAZESIZE = 30;
+const int MAZESIZE = 50;
 block maze[MAZESIZE+10][MAZESIZE+10];
 
 void linesDDA(int x0, int y0, int x1, int y1) {
@@ -126,7 +126,7 @@ void displayLoop() {
 int main(int argc, char* argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	glutInitWindowPosition(500, 300);
+	glutInitWindowPosition(500, 0);
 	glutInitWindowSize(MAX, MAX);
 	glutCreateWindow("maze");
 	glutDisplayFunc(displayLoop);
